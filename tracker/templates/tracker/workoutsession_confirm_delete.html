@@ -14,7 +14,7 @@
     <form method="post">
         {% csrf_token %}
         <div class="flex justify-end space-x-3">
-            <a href="{% url 'tracker_app:workout_detail' session.pk %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition duration-300">
+            <a href="{% url 'tracker:workout_detail' session.pk %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition duration-300">
                 Cancel
             </a>
             <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
