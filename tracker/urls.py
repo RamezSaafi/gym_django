@@ -1,12 +1,11 @@
-# tracker_app/urls.py
 from django.urls import path
 from . import views
 
-app_name = 'tracker' # Define an app namespace
+app_name = 'tracker' 
 
 urlpatterns = [
     # Homepage
-    path('', views.HomePageView.as_view(), name='home'), # Use root for home if desired
+    path('', views.HomePageView.as_view(), name='home'), 
 
     # Trainer URLs
     path('trainers/', views.TrainerListView.as_view(), name='trainer_list'),

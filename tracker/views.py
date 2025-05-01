@@ -14,29 +14,29 @@ class HomePageView(TemplateView):
 # --- Trainer CRUD ---
 class TrainerListView(ListView):
     model = Trainer
-    template_name = 'tracker/trainer_list.html' # Default: tracker/trainer_list.html
-    context_object_name = 'trainers' # Default: object_list
+    template_name = 'tracker/trainer_list.html' 
+    context_object_name = 'trainers'
 
 class TrainerDetailView(DetailView):
     model = Trainer
-    template_name = 'tracker/trainer_detail.html' # Default: tracker/trainer_detail.html
-    context_object_name = 'trainer' # Default: object or trainer
+    template_name = 'tracker/trainer_detail.html'
+    context_object_name = 'trainer' 
 
 class TrainerCreateView(CreateView):
     model = Trainer
-    form_class = TrainerForm # Use the form
-    template_name = 'tracker/trainer_form.html' # Default: tracker/trainer_form.html
-    success_url = reverse_lazy('tracker:trainer_list') # Redirect after successful creation
+    form_class = TrainerForm
+    template_name = 'tracker/trainer_form.html'
+    success_url = reverse_lazy('tracker:trainer_list') 
 
 class TrainerUpdateView(UpdateView):
     model = Trainer
-    form_class = TrainerForm # Use the form
+    form_class = TrainerForm
     template_name = 'tracker/trainer_form.html'
     success_url = reverse_lazy('tracker:trainer_list')
 
 class TrainerDeleteView(DeleteView):
     model = Trainer
-    template_name = 'tracker/trainer_confirm_delete.html' # Default: tracker/trainer_confirm_delete.html
+    template_name = 'tracker/trainer_confirm_delete.html' 
     success_url = reverse_lazy('tracker:trainer_list')
     context_object_name = 'trainer'
 
@@ -78,7 +78,7 @@ class WorkoutSessionListView(ListView):
 class WorkoutSessionDetailView(DetailView):
     model = WorkoutSession
     template_name = 'tracker/workoutsession_detail.html'
-    context_object_name = 'session' # Changed context name for clarity
+    context_object_name = 'session' 
 
 class WorkoutSessionCreateView(CreateView):
     model = WorkoutSession
