@@ -7,7 +7,7 @@
     <h1 class="text-3xl font-bold text-gray-800 mb-4">Workout Session Details</h1>
     <div class="mb-2">
         <strong class="text-gray-600">Member:</strong>
-        <a href="{% url 'tracker_app:member_detail' session.member.pk %}" class="text-blue-600 hover:underline">{{ session.member.name }}</a>
+        <a href="{% url 'tracker:member_detail' session.member.pk %}" class="text-blue-600 hover:underline">{{ session.member.name }}</a>
     </div>
      <div class="mb-2">
         <strong class="text-gray-600">Workout Type:</strong>
@@ -19,17 +19,17 @@
     </div>
     <div class="mb-4">
         <strong class="text-gray-600">Date:</strong>
-        <span class="text-gray-800">{{ session.date|date:"F j, Y" }}</span> {# More readable date format #}
+        <span class="text-gray-800">{{ session.date|date:"F j, Y" }}</span>
     </div>
 
     <div class="mt-6 border-t pt-4 space-x-3">
-        <a href="{% url 'tracker_app:workout_update' session.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+        <a href="{% url 'tracker:workout_update' session.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300">
             Edit
         </a>
-        <a href="{% url 'tracker_app:workout_delete' session.pk %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+        <a href="{% url 'tracker:workout_delete' session.pk %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
             Delete
         </a>
-        <a href="{% url 'tracker_app:workout_list' %}" class="text-gray-600 hover:text-gray-800 py-2 px-4">
+        <a href="{% url 'tracker:workout_list' %}" class="text-gray-600 hover:text-gray-800 py-2 px-4">
             Back to List
         </a>
     </div>
