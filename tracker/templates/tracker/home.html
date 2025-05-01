@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Gym Tracker{% endblock %}
+
+{% block content %}
+<div class="bg-white p-8 rounded-lg shadow-md text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-4">Welcome to Gym Tracker</h1>
+    <p class="text-lg text-gray-600 mb-6">Manage your trainers, members, and workout sessions efficiently.</p>
+    <div class="space-x-4">
+        <a href="{% url 'tracker:trainer_list' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+            View Trainers
+        </a>
+        <a href="{% url 'tracker:member_list' %}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+            View Members
+        </a>
+        <a href="{% url 'tracker:workout_list' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+            View Workouts
+        </a>
+    </div>
+</div>
+{% endblock %}

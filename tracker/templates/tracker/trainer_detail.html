@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ trainer.name }}{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ trainer.name }}</h1>
+    <div class="mb-4">
+        <strong class="text-gray-600">Specialty:</strong>
+        <span class="text-gray-800">{{ trainer.specialty }}</span>
+    </div>
+
+    <h2 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Assigned Members</h2>
+    {% if trainer.member_set.all %}
+        <ul class="list-disc list-inside text-gray-700">
+            {% for member in trainer.member_set.all %}
+                <li><a href="{% url 'tracker:member_detail' member.pk %}" class="text-blue-600 hover:underline">{{ member.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-gray-500">No members assigned to this trainer yet.</p>
+    {% endif %}
+
+    <div class="mt-6 border-t pt-4 space-x-3">
+        <a href="{% url 'tracker:trainer_update' trainer.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+            Edit
+        </a>
+        <a href="{% url 'tracker:trainer_delete' trainer.pk %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+            Delete
+        </a>
+        <a href="{% url 'tracker:trainer_list' %}" class="text-gray-600 hover:text-gray-800 py-2 px-4">
+            Back to List
+        </a>
+    </div>
+</div>
+{% endblock %}
