@@ -53,7 +53,6 @@
                 />
               </svg>
             </button>
-            {# Edit Link (goes to full page) #}
             <a
               href="{% url 'tracker:trainer_update' trainer.pk %}"
               class="text-yellow-500 hover:text-yellow-700 cursor-pointer"
@@ -75,7 +74,6 @@
                 />
               </svg>
             </a>
-            {# Delete Button - Triggers Generic Delete Modal #}
             <button
               type="button"
               class="open-delete-modal text-red-500 hover:text-red-700 cursor-pointer"
@@ -131,7 +129,6 @@
       class="trainer-detail-modal-overlay fixed inset-0 bg-gray-800/25 bg-opacity-75 transition-opacity"
       aria-hidden="true"
     ></div>
-    {# Changed class slightly #}
 
     <!-- Modal Content -->
     <div
@@ -145,9 +142,8 @@
           class="text-lg leading-6 font-medium text-gray-900"
           id="trainerDetailModalTitle"
         >
-          {# Changed ID #} Trainer Details
+           Trainer Details
         </h3>
-        {# Use a more specific class for closing this modal #}
         <button
           type="button"
           class="close-trainer-detail-modal text-gray-400 hover:text-gray-600 cursor-pointer"
@@ -175,28 +171,23 @@
       <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[70vh] overflow-y-auto">
         <!-- Loading Indicator -->
         <div id="trainerDetailModalLoading" class="text-center py-10 hidden">
-          {# Changed ID #}
           <p class="text-gray-500">Loading details...</p>
         </div>
         <!-- Content Area -->
         <div id="trainerDetailModalContent">
-          {# Changed ID #}
           <h4
             class="text-2xl font-bold text-gray-800 mb-3"
             id="modal-trainer-name"
           ></h4>
-          {# Changed ID #}
           <div class="mb-4">
             <strong class="text-gray-600">Specialty:</strong>
-            <span class="text-gray-800" id="modal-trainer-specialty"></span> {#
-            Changed ID #}
+            <span class="text-gray-800" id="modal-trainer-specialty"></span> 
           </div>
 
           <h5 class="text-xl font-semibold text-gray-700 mt-5 mb-3">
             Assigned Members
           </h5>
           <div id="modal-trainer-members" class="text-sm">
-            {# Changed ID #} {# Member list will be populated here #}
           </div>
         </div>
       </div>
@@ -210,10 +201,9 @@
           id="modal-trainer-edit-button"
           class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-500 text-base font-medium text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 sm:ml-3 sm:w-auto sm:text-sm"
         >
-          {# Changed ID #} Edit
+           Edit
         </a>
-        {# This button needs the 'open-delete-modal' class to trigger the
-        generic delete JS #}
+        
         <button
           type="button"
           id="modal-trainer-delete-button"
@@ -222,9 +212,9 @@
           data-object-name=""
           class="cursor-pointer open-delete-modal inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
         >
-          {# Changed ID, Added data-object-type #} Delete
+           Delete
         </button>
-        {# Use a more specific class for closing this modal #}
+        
         <button
           type="button"
           class="cursor-pointer close-trainer-detail-modal mt-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
@@ -238,11 +228,6 @@
   {% comment %} Generic Delete Confirmation Modal {% endcomment %}
   <div
     id="deleteConfirmationModal"
-    {#
-    Keep
-    id
-    Generic
-    #}
     class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
     aria-labelledby="deleteModalTitle"
     role="dialog"
@@ -251,10 +236,6 @@
     <!-- Modal Overlay -->
     <div
       class="delete-modal-overlay fixed inset-0 bg-gray-800/25 overlay bg-opacity-75 transition-opacity"
-      {#
-      Generic
-      class
-      #}
       aria-hidden="true"
     ></div>
 
@@ -289,10 +270,9 @@
               class="text-lg leading-6 font-medium text-gray-900"
               id="deleteModalTitle"
             >
-              Delete Confirmation {# Title set by JS if needed #}
+              Delete Confirmation
             </h3>
             <div class="mt-2">
-              {# Text dynamically set by JS #}
               <p class="text-sm text-gray-600 mb-3" id="deleteModalMessage">
                 Are you sure you want to delete this item?
               </p>
@@ -305,15 +285,10 @@
       </div>
       <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
         <form id="deleteModalForm" method="post" action="" class="inline-block">
-          {# Keep ID Generic #} {% csrf_token %}
+            {% csrf_token %}
           <button
             type="submit"
             id="confirmDeleteButton"
-            {#
-            Keep
-            id
-            Generic
-            #}
             class="submit w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
           >
             Confirm Delete
@@ -322,11 +297,6 @@
         <button
           type="button"
           id="cancelDeleteButton"
-          {#
-          Keep
-          id
-          Generic
-          #}
           class="close-delete-modal mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
         >
           Cancel

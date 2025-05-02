@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %} {# Might need this if you add custom JS/CSS #}
+{% load static %} 
 
 {% block title %}{% if object %}Edit Trainer{% else %}Add Trainer{% endif %}{% endblock %}
 
@@ -13,7 +13,7 @@
         {% for field in form %}
         <div class="mb-4">
             <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
-            {{ field }} {# Renders the widget with classes defined in forms.py #}
+            {{ field }} 
             {% if field.help_text %}
                 <p class="mt-1 text-xs text-gray-500">{{ field.help_text }}</p>
             {% endif %}

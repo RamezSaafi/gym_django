@@ -1,17 +1,14 @@
-// tracker/static/tracker/js/trainer_modals.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Trainer Detail Modal Elements & Functions ---
-    const trainerDetailModal = document.getElementById('trainerDetailModal'); // Changed ID
-    const trainerDetailModalContent = document.getElementById('trainerDetailModalContent'); // Changed ID
-    const trainerDetailModalLoading = document.getElementById('trainerDetailModalLoading'); // Changed ID
-    const modalTrainerName = document.getElementById('modal-trainer-name'); // Changed ID
-    const modalTrainerSpecialty = document.getElementById('modal-trainer-specialty'); // Changed ID
-    const modalTrainerMembers = document.getElementById('modal-trainer-members'); // Changed ID
-    const modalTrainerEditBtn = document.getElementById('modal-trainer-edit-button'); // Changed ID
-    const modalTrainerDeleteBtn = document.getElementById('modal-trainer-delete-button'); // Changed ID
+    const trainerDetailModal = document.getElementById('trainerDetailModal');
+    const trainerDetailModalContent = document.getElementById('trainerDetailModalContent');
+    const trainerDetailModalLoading = document.getElementById('trainerDetailModalLoading');
+    const modalTrainerName = document.getElementById('modal-trainer-name');
+    const modalTrainerSpecialty = document.getElementById('modal-trainer-specialty');
+    const modalTrainerMembers = document.getElementById('modal-trainer-members');
+    const modalTrainerEditBtn = document.getElementById('modal-trainer-edit-button');
+    const modalTrainerDeleteBtn = document.getElementById('modal-trainer-delete-button');
 
-    // Specific triggers and closers for this modal type
     const openTrainerDetailButtons = document.querySelectorAll('.open-trainer-detail-modal');
     const closeTrainerDetailButtons = document.querySelectorAll('.close-trainer-detail-modal');
     const trainerDetailModalOverlay = document.querySelector('.trainer-detail-modal-overlay');
@@ -55,14 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Action Buttons
         if(modalTrainerEditBtn && data.edit_url) modalTrainerEditBtn.href = data.edit_url;
-        // Prepare the delete button inside this modal to trigger the generic delete modal
+
         if(modalTrainerDeleteBtn && data.delete_url) {
              modalTrainerDeleteBtn.setAttribute('data-delete-url', data.delete_url);
-             // Use a generic name 'data-object-name' for the delete modal JS
+
              modalTrainerDeleteBtn.setAttribute('data-object-name', data.name || '');
-             // Add object type for potentially more specific messaging in delete modal JS
+
              modalTrainerDeleteBtn.setAttribute('data-object-type', 'Trainer');
-             // Ensure it has the class to trigger the *delete* modal logic
+
              modalTrainerDeleteBtn.classList.add('open-delete-modal');
         }
     }
@@ -93,8 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if(trainerDetailModal) {
             trainerDetailModal.classList.add('hidden');
             trainerDetailModal.classList.remove('flex');
-             // Optional: Clear content
-             if(modalTrainerName) modalTrainerName.textContent = '';
+
+            if(modalTrainerName) modalTrainerName.textContent = '';
              if(modalTrainerSpecialty) modalTrainerSpecialty.textContent = '';
              if(modalTrainerMembers) modalTrainerMembers.innerHTML = '';
              if(modalTrainerEditBtn) modalTrainerEditBtn.href = '#';
@@ -130,10 +127,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-     // Note: The generic delete modal logic (opening, closing, submitting)
-     // should be in a separate shared file or duplicated in the member_modals.js
-     // if you want strict separation per model. For simplicity, let's assume
-     // the delete modal logic from member_modals.js is available globally or
-     // loaded separately and handles the '.open-delete-modal' class triggers.
 
-}); // End DOMContentLoaded
+}); 

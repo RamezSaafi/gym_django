@@ -40,11 +40,9 @@
                         title="View Session Details">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
                 </button>
-                {# Edit Link - goes to full page #}
                 <a href="{% url 'tracker:workout_update' session.pk %}" class="text-yellow-500 hover:text-yellow-700" title="Edit">
                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>
                 </a>
-                {# Delete Button - triggers generic delete modal #}
                 <button type="button"
                         class="open-delete-modal text-red-500 hover:text-red-700 cursor-pointer"
                         data-delete-url="{% url 'tracker:workout_delete' session.pk %}"
@@ -73,16 +71,15 @@ role="dialog"
 aria-modal="true">
 
 <!-- Modal Overlay -->
-<div class="workout-detail-modal-overlay fixed inset-0 bg-gray-800/25 bg-opacity-75 transition-opacity" aria-hidden="true"></div> {# Changed class #}
+<div class="workout-detail-modal-overlay fixed inset-0 bg-gray-800/25 bg-opacity-75 transition-opacity" aria-hidden="true"></div> 
 
 <!-- Modal Content -->
-<div class="relative bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full overflow-hidden"> {# Adjusted max-w #}
+<div class="relative bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full overflow-hidden">
     <!-- Header -->
     <div class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-between items-center border-b border-gray-200">
-        <h3 class="text-lg leading-6 font-medium text-gray-900" id="workoutDetailModalTitle"> {# Changed ID #}
+        <h3 class="text-lg leading-6 font-medium text-gray-900" id="workoutDetailModalTitle">
             Workout Session Details
         </h3>
-         {# Use a more specific class for closing this modal #}
         <button type="button" class="close-workout-detail-modal text-gray-400 hover:text-gray-600 cursor-pointer">
             <span class="sr-only">Close</span>
             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -92,40 +89,38 @@ aria-modal="true">
     <!-- Body -->
     <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[70vh] overflow-y-auto">
         <!-- Loading Indicator -->
-        <div id="workoutDetailModalLoading" class="text-center py-10 hidden"> {# Changed ID #}
+        <div id="workoutDetailModalLoading" class="text-center py-10 hidden">
             <p class="text-gray-500">Loading details...</p>
         </div>
         <!-- Content Area -->
-        <div id="workoutDetailModalContent"> {# Changed ID #}
+        <div id="workoutDetailModalContent">
             <div class="mb-2">
                 <strong class="text-gray-600">Member:</strong>
-                <span class="text-gray-800" id="modal-workout-member"></span> {# Changed ID #}
+                <span class="text-gray-800" id="modal-workout-member"></span>
             </div>
              <div class="mb-2">
                 <strong class="text-gray-600">Workout Type:</strong>
-                <span class="text-gray-800" id="modal-workout-type"></span> {# Changed ID #}
+                <span class="text-gray-800" id="modal-workout-type"></span>
             </div>
             <div class="mb-2">
                 <strong class="text-gray-600">Duration:</strong>
-                <span class="text-gray-800" id="modal-workout-duration"></span> {# Changed ID #}
+                <span class="text-gray-800" id="modal-workout-duration"></span>
             </div>
             <div class="mb-4">
                 <strong class="text-gray-600">Date:</strong>
-                <span class="text-gray-800" id="modal-workout-date"></span> {# Changed ID #}
+                <span class="text-gray-800" id="modal-workout-date"></span>
             </div>
         </div>
     </div>
 
    <!-- Footer (Optional Actions) -->
    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-gray-200">
-        <a href="#" id="modal-workout-edit-button" class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-500 text-base font-medium text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 sm:ml-3 sm:w-auto sm:text-sm"> {# Changed ID #}
+        <a href="#" id="modal-workout-edit-button" class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-500 text-base font-medium text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 sm:ml-3 sm:w-auto sm:text-sm">
             Edit
         </a>
-        {# This button needs the 'open-delete-modal' class to trigger the generic delete JS #}
-        <button type="button" id="modal-workout-delete-button" data-delete-url="" data-object-type="Workout Session" data-object-name="" class="cursor-pointer open-delete-modal inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"> {# Changed ID, Added data-object-type #}
+        <button type="button" id="modal-workout-delete-button" data-delete-url="" data-object-type="Workout Session" data-object-name="" class="cursor-pointer open-delete-modal inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"> 
             Delete
         </button>
-        {# Use a more specific class for closing this modal #}
         <button type="button" class="cursor-pointer close-workout-detail-modal mt-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
             Close
         </button>
@@ -138,11 +133,6 @@ aria-modal="true">
 {% comment %} Generic Delete Confirmation Modal {% endcomment %}
 <div
 id="deleteConfirmationModal"
-{#
-Keep
-id
-Generic
-#}
 class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
 aria-labelledby="deleteModalTitle"
 role="dialog"
@@ -151,10 +141,6 @@ aria-modal="true"
 <!-- Modal Overlay -->
 <div
   class="delete-modal-overlay fixed inset-0 bg-gray-800/25 overlay bg-opacity-75 transition-opacity"
-  {#
-  Generic
-  class
-  #}
   aria-hidden="true"
 ></div>
 
@@ -189,10 +175,9 @@ aria-modal="true"
           class="text-lg leading-6 font-medium text-gray-900"
           id="deleteModalTitle"
         >
-          Delete Confirmation {# Title set by JS if needed #}
+          Delete Confirmation
         </h3>
         <div class="mt-2">
-          {# Text dynamically set by JS #}
           <p class="text-sm text-gray-600 mb-3" id="deleteModalMessage">
             Are you sure you want to delete this item?
           </p>
@@ -205,15 +190,10 @@ aria-modal="true"
   </div>
   <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
     <form id="deleteModalForm" method="post" action="" class="inline-block">
-      {# Keep ID Generic #} {% csrf_token %}
+      {% csrf_token %}
       <button
         type="submit"
         id="confirmDeleteButton"
-        {#
-        Keep
-        id
-        Generic
-        #}
         class="submit w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
       >
         Confirm Delete
@@ -222,11 +202,6 @@ aria-modal="true"
     <button
       type="button"
       id="cancelDeleteButton"
-      {#
-      Keep
-      id
-      Generic
-      #}
       class="close-delete-modal mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
     >
       Cancel

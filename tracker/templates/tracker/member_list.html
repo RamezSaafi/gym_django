@@ -192,15 +192,13 @@
         </div>
         <div class="mb-4">
           <strong class="text-gray-600">Assigned Trainer:</strong>
-          <span id="modal-member-trainer"></span> {# Will contain link or 'None'
-          #}
+          <span id="modal-member-trainer"></span> 
         </div>
 
         <h5 class="text-xl font-semibold text-gray-700 mt-5 mb-3">
           Workout Sessions
         </h5>
         <div id="modal-member-workouts" class="text-sm">
-          {# Workout list will be populated here #}
         </div>
       </div>
     </div>
@@ -280,10 +278,9 @@
             class="text-lg leading-6 font-medium text-gray-900"
             id="deleteModalTitle"
           >
-            Delete Confirmation {# Title set by JS if needed #}
+            Delete Confirmation 
           </h3>
           <div class="mt-2">
-            {# Text dynamically set by JS #}
             <p class="text-sm text-gray-600 mb-3" id="deleteModalMessage">
               Are you sure you want to delete this item?
             </p>
@@ -296,7 +293,7 @@
     </div>
     <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
       <form id="deleteModalForm" method="post" action="" class="inline-block">
-        {# Keep ID Generic #} {% csrf_token %}
+        {% csrf_token %}
         <button
           type="submit"
           id="confirmDeleteButton"

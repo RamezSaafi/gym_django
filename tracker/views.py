@@ -25,8 +25,6 @@ class HomePageView(TemplateView):
         context['trainer_count'] = Trainer.objects.count()
         context['member_count'] = Member.objects.count()
         context['workout_count'] = WorkoutSession.objects.count()
-        # You could add more stats here, e.g., recent workouts
-        # context['recent_workouts'] = WorkoutSession.objects.order_by('-date')[:5]
         return context
 
 
@@ -68,20 +66,18 @@ class TrainerDeleteView(DeleteView):
 def trainer_ajax_detail(request, pk):
     trainer = get_object_or_404(Trainer, pk=pk)
 
-    # Prepare assigned member data
     assigned_members = []
-    for member in trainer.member_set.all().order_by("name"):  # Get related members
+    for member in trainer.member_set.all().order_by("name"):
         assigned_members.append(
             {
                 "id": member.pk,
                 "name": member.name,
                 "url": reverse(
                     "tracker:member_detail", args=[member.pk]
-                ),  # Optional: URL to member detail
+                ),
             }
         )
 
-    # Construct the data dictionary
     data = {
         "id": trainer.pk,
         "name": trainer.name,
@@ -89,10 +85,10 @@ def trainer_ajax_detail(request, pk):
         "members": assigned_members,
         "edit_url": reverse(
             "tracker:trainer_update", args=[trainer.pk]
-        ),  # URL for edit button
+        ),
         "delete_url": reverse(
             "tracker:trainer_delete", args=[trainer.pk]
-        ),  # URL for delete trigger
+        ),
     }
     return JsonResponse(data)
 
@@ -135,24 +131,22 @@ class MemberDeleteView(DeleteView):
 def member_ajax_detail(request, pk):
     member = get_object_or_404(Member, pk=pk)
 
-    # Prepare workout session data
     workout_sessions = []
     for session in member.workoutsession_set.all().order_by(
         "-date"
-    ):  # Get related sessions
+    ):
         workout_sessions.append(
             {
                 "id": session.pk,
                 "workout_type": session.workout_type,
                 "duration": session.duration,
-                "date": session.date.strftime("%Y-%m-%d"),  # Format date as string
+                "date": session.date.strftime("%Y-%m-%d"), 
                 "url": reverse(
                     "tracker:workout_detail", args=[session.pk]
-                ),  # Optional: URL to session detail
+                ), 
             }
         )
 
-    # Prepare trainer data (handle null trainer)
     trainer_data = None
     if member.trainer:
         trainer_data = {
@@ -160,10 +154,9 @@ def member_ajax_detail(request, pk):
             "name": member.trainer.name,
             "url": reverse(
                 "tracker:trainer_detail", args=[member.trainer.pk]
-            ),  # Optional: URL to trainer detail
+            ), 
         }
 
-    # Construct the data dictionary
     data = {
         "id": member.pk,
         "name": member.name,
@@ -172,10 +165,10 @@ def member_ajax_detail(request, pk):
         "workout_sessions": workout_sessions,
         "edit_url": reverse(
             "tracker:member_update", args=[member.pk]
-        ),  # URL for edit button
+        ), 
         "delete_url": reverse(
             "tracker:member_delete", args=[member.pk]
-        ),  # URL for delete trigger
+        ),
     }
     return JsonResponse(data)
 
@@ -219,25 +212,23 @@ def workout_ajax_detail(request, pk):
 
     session = get_object_or_404(WorkoutSession, pk=pk)
 
-    # Prepare member data
     member_data = {
         "id": session.member.pk,
         "name": session.member.name,
         "url": reverse(
             "tracker:member_detail", args=[session.member.pk]
-        ),  # Optional: URL to member detail
+        ), 
     }
 
-    # Construct the data dictionary
     data = {
         "id": session.pk,
         "member": member_data,
         "workout_type": session.workout_type,
         "duration": session.duration,
-        "date": session.date.strftime("%Y-%m-%d"),  # Format date
+        "date": session.date.strftime("%Y-%m-%d"),  
         "date_display": session.date.strftime(
             "%B %d, %Y"
-        ),  # More readable format for display
+        ),
         "edit_url": reverse("tracker:workout_update", args=[session.pk]),
         "delete_url": reverse("tracker:workout_delete", args=[session.pk]),
     }

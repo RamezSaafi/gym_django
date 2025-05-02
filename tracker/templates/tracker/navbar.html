@@ -4,7 +4,6 @@
 <nav class="bg-white shadow-md border-b border-gray-200 mb-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      {# Left Side - Brand/Logo #}
       <div class="flex-shrink-0">
         <a
           href="{% url 'tracker:home' %}"
@@ -14,10 +13,8 @@
         </a>
       </div>
 
-      {# Right Side - Navigation Links #}
       <div class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-4">
-          {# Active state check using request.path #}
           <a
             href="{% url 'tracker:home' %}"
             class="{% if request.path == '/' %}border-b-2 border-indigo-500 text-gray-900{% else %}text-gray-500 hover:text-gray-900 hover:border-gray-300 hover:border-b-2{% endif %} px-1 pt-1 pb-[6px] text-sm font-medium transition duration-150 ease-in-out"
@@ -42,11 +39,9 @@
           >
             Workouts
           </a>
-          {# Add other links as needed #}
         </div>
       </div>
 
-      {# Mobile Menu Button (optional, needs JS for toggle) #}
       <div class="-mr-2 flex md:hidden">
         <button
           type="button"
@@ -90,7 +85,6 @@
     </div>
   </div>
 
-  {# Mobile menu, show/hide based on menu state (optional, needs JS) #}
   <div class="md:hidden hidden" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
       <a

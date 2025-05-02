@@ -1,7 +1,6 @@
-// tracker/static/tracker/js/workout_modals.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Workout Detail Modal Elements & Functions ---
+
     const workoutDetailModal = document.getElementById('workoutDetailModal');
     const workoutDetailModalContent = document.getElementById('workoutDetailModalContent');
     const workoutDetailModalLoading = document.getElementById('workoutDetailModalLoading');
@@ -34,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
              if (data.member && data.member.url && data.member.name) {
                 modalWorkoutMember.innerHTML = `<a href="${data.member.url}" class="text-blue-600 hover:underline">${data.member.name}</a>`;
             } else if (data.member && data.member.name) {
-                modalWorkoutMember.textContent = data.member.name; // Fallback if no URL
+                modalWorkoutMember.textContent = data.member.name; 
             }
              else {
                 modalWorkoutMember.textContent = 'N/A';
@@ -43,12 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(modalWorkoutType) modalWorkoutType.textContent = data.workout_type || 'N/A';
         if(modalWorkoutDuration) modalWorkoutDuration.textContent = data.duration ? `${data.duration} minutes` : 'N/A';
-        if(modalWorkoutDate) modalWorkoutDate.textContent = data.date_display || data.date || 'N/A'; // Use display format
+        if(modalWorkoutDate) modalWorkoutDate.textContent = data.date_display || data.date || 'N/A';
 
         // Action Buttons
         if(modalWorkoutEditBtn && data.edit_url) modalWorkoutEditBtn.href = data.edit_url;
         if(modalWorkoutDeleteBtn && data.delete_url) {
-             // Prepare delete button to trigger generic delete modal
              const objectName = `${data.workout_type || 'Session'} for ${data.member?.name || '?'} on ${data.date || '?'}`;
              modalWorkoutDeleteBtn.setAttribute('data-delete-url', data.delete_url);
              modalWorkoutDeleteBtn.setAttribute('data-object-name', objectName);
@@ -84,8 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if(workoutDetailModal) {
             workoutDetailModal.classList.add('hidden');
             workoutDetailModal.classList.remove('flex');
-             // Optional: Clear content
-             if(modalWorkoutMember) modalWorkoutMember.innerHTML = '';
+
+            if(modalWorkoutMember) modalWorkoutMember.innerHTML = '';
              if(modalWorkoutType) modalWorkoutType.textContent = '';
              if(modalWorkoutDuration) modalWorkoutDuration.textContent = '';
              if(modalWorkoutDate) modalWorkoutDate.textContent = '';
@@ -122,7 +120,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-     // Assumes the generic delete modal JS is loaded separately
-     // and handles '.open-delete-modal' triggers.
-
-}); // End DOMContentLoaded
+}); 

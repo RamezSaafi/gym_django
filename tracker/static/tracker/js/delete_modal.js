@@ -1,23 +1,19 @@
-// tracker/static/tracker/js/delete_modal.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Generic Delete Confirmation Modal Elements & Functions ---
     const deleteModal = document.getElementById('deleteConfirmationModal');
     const deleteModalForm = document.getElementById('deleteModalForm');
-    const deleteModalMessage = document.getElementById('deleteModalMessage'); // Target for main message
-    const deleteModalWarning = document.getElementById('deleteModalWarning'); // Target for warning
-    const deleteCancelBtn = document.getElementById('cancelDeleteButton'); // Generic cancel button ID
-    const deleteConfirmBtn = document.getElementById('confirmDeleteButton'); // Generic confirm button ID
-    const deleteModalOverlay = document.querySelector('.delete-modal-overlay'); // Generic overlay class
-
-    function showDeleteModal(deleteUrl, objectName, objectType = 'item') { // Added objectType
+    const deleteModalMessage = document.getElementById('deleteModalMessage'); 
+    const deleteModalWarning = document.getElementById('deleteModalWarning');  
+    const deleteCancelBtn = document.getElementById('cancelDeleteButton'); 
+    const deleteConfirmBtn = document.getElementById('confirmDeleteButton'); 
+    const deleteModalOverlay = document.querySelector('.delete-modal-overlay'); 
+    function showDeleteModal(deleteUrl, objectName, objectType = 'item') {
         if (!deleteModal || !deleteModalForm || !deleteModalMessage || !deleteConfirmBtn) {
             console.error("Generic delete modal elements not found!");
             return;
         }
         deleteModalForm.action = deleteUrl;
 
-        // Customize messages based on object type
         let message = `Are you sure you want to delete this ${objectType.toLowerCase()}: <strong class="font-semibold">${objectName || 'this item'}</strong>?`;
         let warning = `This action cannot be undone.`;
 
@@ -26,9 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (objectType === 'Member') {
              warning += ` Deleting this member will also delete all their associated workout sessions.`;
         }
-         // Add more specific warnings for other types if needed
 
-        if(deleteModalMessage) deleteModalMessage.innerHTML = message; // Use innerHTML for the strong tag
+        if(deleteModalMessage) deleteModalMessage.innerHTML = message;
         if(deleteModalWarning) deleteModalWarning.textContent = warning;
 
 
@@ -46,13 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
             deleteModal.classList.add('hidden');
             deleteModal.classList.remove('flex');
             if(deleteModalForm) deleteModalForm.action = "";
-            // Clear dynamic text
             if(deleteModalMessage) deleteModalMessage.textContent = 'Are you sure you want to delete this item?';
             if(deleteModalWarning) deleteModalWarning.textContent = 'This action cannot be undone.';
         }
     }
 
-    // AJAX Form Submission for Delete Modal
     if (deleteModalForm) {
         deleteModalForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -76,13 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => {
                 if (response.ok) {
                     hideDeleteModal();
-                    // Redirect after successful deletion
-                    // Assumes backend sends redirect response
-                    if (response.redirected || response.url !== url) { // Check if redirect happened
+                    if (response.redirected || response.url !== url) {
                          window.location.href = response.url;
                     } else {
-                        // Fallback or handle cases where no redirect happens (e.g., API response)
-                        window.location.reload(); // Simple fallback: reload the page
+                        window.location.reload();
                     }
 
                 } else {
@@ -104,15 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
-     // Delete Modal Trigger Listener (using event delegation)
      document.body.addEventListener('click', function(event) {
         const triggerButton = event.target.closest('.open-delete-modal');
         if (triggerButton) {
             event.preventDefault();
             const deleteUrl = triggerButton.dataset.deleteUrl;
-            const objectName = triggerButton.dataset.objectName; // Generic name attribute
-            const objectType = triggerButton.dataset.objectType || 'item'; // Get type, default to 'item'
+            const objectName = triggerButton.dataset.objectName; 
+            const objectType = triggerButton.dataset.objectType || 'item'; 
 
             if (deleteUrl && objectName !== undefined) {
                  showDeleteModal(deleteUrl, objectName, objectType);
@@ -122,23 +110,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Listeners for Cancel button and Overlay click
-    const closeDeleteButtons = document.querySelectorAll('.close-delete-modal'); // Added specific class for cancel/close
+    const closeDeleteButtons = document.querySelectorAll('.close-delete-modal');
      closeDeleteButtons.forEach(button => {
         button.addEventListener('click', hideDeleteModal);
     });
-    if (deleteCancelBtn) { // Add listener to the specific cancel button too
+    if (deleteCancelBtn) { 
          deleteCancelBtn.addEventListener('click', hideDeleteModal);
     }
     if (deleteModalOverlay) {
          deleteModalOverlay.addEventListener('click', hideDeleteModal);
     }
 
-     // ESC key listener specifically for this modal
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && deleteModal && !deleteModal.classList.contains('hidden')) {
              hideDeleteModal();
         }
     });
 
-}); // End DOMContentLoaded
+});
