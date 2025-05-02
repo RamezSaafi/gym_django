@@ -4,6 +4,7 @@
 {% block title %}{% if object %}Edit Workout Session{% else %}Log New Workout Session{% endif %}{% endblock %}
 
 {% block content %}
+{% include './navbar.html' %}
 <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
     <h1 class="text-2xl font-bold text-gray-800 mb-6">{% if object %}Edit Workout Session{% else %}Log New Workout Session{% endif %}</h1>
     <form method="post">
@@ -35,7 +36,7 @@
         {% endif %}
 
         <div class="mt-6 flex justify-end space-x-3">
-             <a href="{% if object %}{% url 'tracker:workout_detail' object.pk %}{% else %}{% url 'tracker:workout_list' %}{% endif %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition duration-300">
+             <a href="{% url 'tracker:workout_list' %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition duration-300">
                 Cancel
             </a>
             <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">

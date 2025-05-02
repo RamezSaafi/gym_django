@@ -3,11 +3,12 @@
 {% block title %}Workout Details{% endblock %}
 
 {% block content %}
-<div class="bg-white p-6 rounded-lg shadow-md">
+{% include './navbar.html' %}
+<div class="bg-white p-6 shadow-md mx-auto max-w-[450px] text-center mt-60 rounded-2xl">
     <h1 class="text-3xl font-bold text-gray-800 mb-4">Workout Session Details</h1>
     <div class="mb-2">
         <strong class="text-gray-600">Member:</strong>
-        <a href="{% url 'tracker:member_detail' session.member.pk %}" class="text-blue-600 hover:underline">{{ session.member.name }}</a>
+        <a href="{% url 'tracker:member_detail' session.member.pk %}" class="text-indigo-600 hover:font-semibold">{{ session.member.name }}</a>
     </div>
      <div class="mb-2">
         <strong class="text-gray-600">Workout Type:</strong>
@@ -25,9 +26,6 @@
     <div class="mt-6 border-t pt-4 space-x-3">
         <a href="{% url 'tracker:workout_update' session.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300">
             Edit
-        </a>
-        <a href="{% url 'tracker:workout_delete' session.pk %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-            Delete
         </a>
         <a href="{% url 'tracker:workout_list' %}" class="text-gray-600 hover:text-gray-800 py-2 px-4">
             Back to List

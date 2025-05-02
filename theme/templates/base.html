@@ -8,7 +8,14 @@
     {% tailwind_css %}
   </head>
 
-  <body class="bg-gray-50 font-serif leading-normal tracking-normal mt-5">
-    <div class="container mx-auto">{% block content %} {% endblock %}</div>
+  <body class="bg-gray-50 font-serif leading-normal tracking-normal">
+  {% block content %} {% endblock %}
   </body>
+
+  <script src="{% static 'tracker/js/member_detail.js' %}" defer > </script>
+  <script src="{% static 'tracker/js/delete_modal.js' %}" defer > </script>
+  <script src="{% static 'tracker/js/trainer_detail.js' %}" defer > </script>
+  <script src="{% static 'tracker/js/workout_detail.js' %}" defer > </script>
+
+
 </html>

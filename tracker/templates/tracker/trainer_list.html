@@ -1,51 +1,338 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 
-{% block title %}Trainers{% endblock %}
+{% block title %}Trainers{% endblock %} 
 
 {% block content %}
+{% include './navbar.html' %}
+<div class="container mx-auto">
 <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-gray-800">Trainers</h1>
-    <a href="{% url 'tracker:trainer_create' %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-        Add New Trainer
-    </a>
+  <h1 class="text-3xl font-bold text-gray-800">Trainers</h1>
+  <a
+    href="{% url 'tracker:trainer_create' %}"
+    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+  >
+    Add New Trainer
+  </a>
 </div>
 
 <div class="bg-white shadow-md rounded-lg overflow-hidden">
-    <table class="min-w-full leading-normal">
-        <thead>
-            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                <th class="py-3 px-6 text-left">Name</th>
-                <th class="py-3 px-6 text-left">Specialty</th>
-                <th class="py-3 px-6 text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody class="text-gray-700 text-sm font-light">
-            {% for trainer in trainers %}
-            <tr class="border-b border-gray-200 hover:bg-gray-100">
-                <td class="py-3 px-6 text-left whitespace-nowrap">{{ trainer.name }}</td>
-                <td class="py-3 px-6 text-left">{{ trainer.specialty }}</td>
-                <td class="py-3 px-6 text-center">
-                    <div class="flex item-center justify-center space-x-2">
-                        <a href="{% url 'tracker:trainer_detail' trainer.pk %}" class="text-blue-500 hover:text-blue-700" title="View">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg>
-                        </a>
-                        <a href="{% url 'tracker:trainer_update' trainer.pk %}" class="text-yellow-500 hover:text-yellow-700" title="Edit">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>
-                             Edit
-                        </a>
-                        <a href="{% url 'tracker:trainer_delete' trainer.pk %}" class="text-red-500 hover:text-red-700" title="Delete">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-                            Delete
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="3" class="py-3 px-6 text-center text-gray-500">No trainers found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <table class="min-w-full leading-normal">
+    <thead>
+      <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <th class="py-3 px-6 text-left">Name</th>
+        <th class="py-3 px-6 text-left">Specialty</th>
+        <th class="py-3 px-6 text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="text-gray-700 text-sm font-light">
+      {% for trainer in trainers %}
+      <tr class="border-b border-gray-200 hover:bg-gray-100">
+        <td class="py-3 px-6 text-left whitespace-nowrap">
+          {{ trainer.name }}
+        </td>
+        <td class="py-3 px-6 text-left">{{ trainer.specialty }}</td>
+        <td class="py-3 px-6 text-center">
+          <div class="flex item-center justify-center space-x-2">
+            <button
+              type="button"
+              class="open-trainer-detail-modal text-blue-500 hover:text-blue-700 cursor-pointer"
+              data-detail-url="{% url 'tracker:trainer_ajax_detail' trainer.pk %}"
+              title="View Details"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                <path
+                  fill-rule="evenodd"
+                  d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            {# Edit Link (goes to full page) #}
+            <a
+              href="{% url 'tracker:trainer_update' trainer.pk %}"
+              class="text-yellow-500 hover:text-yellow-700 cursor-pointer"
+              title="Edit"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+            {# Delete Button - Triggers Generic Delete Modal #}
+            <button
+              type="button"
+              class="open-delete-modal text-red-500 hover:text-red-700 cursor-pointer"
+              data-delete-url="{% url 'tracker:trainer_delete' trainer.pk %}"
+              data-object-name="{{ trainer.name|escapejs }}"
+              data-object-type="Trainer"
+              title="Delete Trainer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3" class="py-3 px-6 text-center text-gray-500">
+          No trainers found.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+  <!-- Trainer Detail Modal -->
+  <div
+    id="trainerDetailModal"
+    {#
+    Changed
+    id
+    #}
+    class="fixed inset-0 z-40 hidden flex items-center justify-center p-4"
+    aria-labelledby="trainerDetailModalTitle"
+    {#
+    Changed
+    aria
+    #}
+    role="dialog"
+    aria-modal="true"
+  >
+    <!-- Modal Overlay -->
+    <div
+      class="trainer-detail-modal-overlay fixed inset-0 bg-gray-800/25 bg-opacity-75 transition-opacity"
+      aria-hidden="true"
+    ></div>
+    {# Changed class slightly #}
+
+    <!-- Modal Content -->
+    <div
+      class="relative bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:max-w-2xl sm:w-full overflow-hidden"
+    >
+      <!-- Header -->
+      <div
+        class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-between items-center border-b border-gray-200"
+      >
+        <h3
+          class="text-lg leading-6 font-medium text-gray-900"
+          id="trainerDetailModalTitle"
+        >
+          {# Changed ID #} Trainer Details
+        </h3>
+        {# Use a more specific class for closing this modal #}
+        <button
+          type="button"
+          class="close-trainer-detail-modal text-gray-400 hover:text-gray-600 cursor-pointer"
+        >
+          <span class="sr-only">Close</span>
+          <svg
+            class="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[70vh] overflow-y-auto">
+        <!-- Loading Indicator -->
+        <div id="trainerDetailModalLoading" class="text-center py-10 hidden">
+          {# Changed ID #}
+          <p class="text-gray-500">Loading details...</p>
+        </div>
+        <!-- Content Area -->
+        <div id="trainerDetailModalContent">
+          {# Changed ID #}
+          <h4
+            class="text-2xl font-bold text-gray-800 mb-3"
+            id="modal-trainer-name"
+          ></h4>
+          {# Changed ID #}
+          <div class="mb-4">
+            <strong class="text-gray-600">Specialty:</strong>
+            <span class="text-gray-800" id="modal-trainer-specialty"></span> {#
+            Changed ID #}
+          </div>
+
+          <h5 class="text-xl font-semibold text-gray-700 mt-5 mb-3">
+            Assigned Members
+          </h5>
+          <div id="modal-trainer-members" class="text-sm">
+            {# Changed ID #} {# Member list will be populated here #}
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer (Optional Actions) -->
+      <div
+        class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-gray-200"
+      >
+        <a
+          href="#"
+          id="modal-trainer-edit-button"
+          class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-500 text-base font-medium text-white hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 sm:ml-3 sm:w-auto sm:text-sm"
+        >
+          {# Changed ID #} Edit
+        </a>
+        {# This button needs the 'open-delete-modal' class to trigger the
+        generic delete JS #}
+        <button
+          type="button"
+          id="modal-trainer-delete-button"
+          data-delete-url=""
+          data-object-type="Trainer"
+          data-object-name=""
+          class="cursor-pointer open-delete-modal inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+        >
+          {# Changed ID, Added data-object-type #} Delete
+        </button>
+        {# Use a more specific class for closing this modal #}
+        <button
+          type="button"
+          class="cursor-pointer close-trainer-detail-modal mt-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Generic Delete Confirmation Modal {% endcomment %}
+  <div
+    id="deleteConfirmationModal"
+    {#
+    Keep
+    id
+    Generic
+    #}
+    class="fixed inset-0 z-50 hidden flex items-center justify-center p-4"
+    aria-labelledby="deleteModalTitle"
+    role="dialog"
+    aria-modal="true"
+  >
+    <!-- Modal Overlay -->
+    <div
+      class="delete-modal-overlay fixed inset-0 bg-gray-800/25 overlay bg-opacity-75 transition-opacity"
+      {#
+      Generic
+      class
+      #}
+      aria-hidden="true"
+    ></div>
+
+    <!-- Modal Content -->
+    <div
+      class="relative bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
+    >
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="sm:flex sm:items-start">
+          <div
+            class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
+          >
+            <!-- Exclamation Icon -->
+            <svg
+              class="h-6 w-6 text-red-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+          </div>
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+            <h3
+              class="text-lg leading-6 font-medium text-gray-900"
+              id="deleteModalTitle"
+            >
+              Delete Confirmation {# Title set by JS if needed #}
+            </h3>
+            <div class="mt-2">
+              {# Text dynamically set by JS #}
+              <p class="text-sm text-gray-600 mb-3" id="deleteModalMessage">
+                Are you sure you want to delete this item?
+              </p>
+              <p class="text-xs text-red-600" id="deleteModalWarning">
+                This action cannot be undone. Related items may also be deleted.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <form id="deleteModalForm" method="post" action="" class="inline-block">
+          {# Keep ID Generic #} {% csrf_token %}
+          <button
+            type="submit"
+            id="confirmDeleteButton"
+            {#
+            Keep
+            id
+            Generic
+            #}
+            class="submit w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+          >
+            Confirm Delete
+          </button>
+        </form>
+        <button
+          type="button"
+          id="cancelDeleteButton"
+          {#
+          Keep
+          id
+          Generic
+          #}
+          class="close-delete-modal mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

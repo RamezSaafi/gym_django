@@ -3,7 +3,8 @@
 {% block title %}{{ member.name }}{% endblock %}
 
 {% block content %}
-<div class="bg-white p-6 rounded-lg shadow-md">
+{% include './navbar.html' %}
+<div class="bg-white p-6 shadow-md mx-auto max-w-[450px] text-center mt-60 rounded-2xl">
     <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ member.name }}</h1>
     <div class="mb-2">
         <strong class="text-gray-600">Email:</strong>
@@ -12,7 +13,7 @@
     <div class="mb-4">
         <strong class="text-gray-600">Assigned Trainer:</strong>
         {% if member.trainer %}
-            <a href="{% url 'tracker:trainer_detail' member.trainer.pk %}" class="text-blue-600 hover:underline">{{ member.trainer.name }}</a>
+            <a href="{% url 'tracker:trainer_detail' member.trainer.pk %}" class="text-indigo-600 hover:font-semibold">{{ member.trainer.name }}</a>
         {% else %}
             <span class="text-gray-500">None</span>
         {% endif %}
@@ -20,10 +21,10 @@
 
     <h2 class="text-2xl font-semibold text-gray-700 mt-6 mb-3">Workout Sessions</h2>
     {% if member.workoutsession_set.all %}
-        <ul class="list-disc list-inside text-gray-700 space-y-1">
+        <ul class="list-inside text-gray-700 space-y-1">
             {% for session in member.workoutsession_set.all %}
                 <li>
-                    <a href="{% url 'tracker:workout_detail' session.pk %}" class="text-blue-600 hover:underline">
+                    <a href="{% url 'tracker:workout_detail' session.pk %}" class="text-indigo-600 hover:font-semibold">
                        {{ session.workout_type }} on {{ session.date|date:"Y-m-d" }} ({{ session.duration }} mins)
                     </a>
                  </li>
@@ -36,9 +37,6 @@
     <div class="mt-6 border-t pt-4 space-x-3">
         <a href="{% url 'tracker:member_update' member.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300">
             Edit
-        </a>
-        <a href="{% url 'tracker:member_delete' member.pk %}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-            Delete
         </a>
         <a href="{% url 'tracker:member_list' %}" class="text-gray-600 hover:text-gray-800 py-2 px-4">
             Back to List

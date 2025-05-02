@@ -4,6 +4,8 @@
 {% block title %}{% if object %}Edit Member{% else %}Add Member{% endif %}{% endblock %}
 
 {% block content %}
+{% include './navbar.html' %}
+
 <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
     <h1 class="text-2xl font-bold text-gray-800 mb-6">{% if object %}Edit {{ object.name }}{% else %}Add New Member{% endif %}</h1>
     <form method="post">
@@ -12,7 +14,7 @@
         {% for field in form %}
         <div class="mb-4">
             <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
-            {{ field }} {# Renders the widget with classes defined in forms.py #}
+            {{ field }} 
             {% if field.help_text %}
                 <p class="mt-1 text-xs text-gray-500">{{ field.help_text }}</p>
             {% endif %}
@@ -35,7 +37,7 @@
         {% endif %}
 
         <div class="mt-6 flex justify-end space-x-3">
-             <a href="{% if object %}{% url 'tracker:member_detail' object.pk %}{% else %}{% url 'tracker:member_list' %}{% endif %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition duration-300">
+             <a href="{% url 'tracker:member_list' %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition duration-300">
                 Cancel
             </a>
             <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
