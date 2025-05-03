@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let message = `Are you sure you want to delete this ${objectType.toLowerCase()}: <strong class="font-semibold">${objectName || 'this item'}</strong>?`;
         let warning = `This action cannot be undone.`;
-
         if (objectType === 'Trainer') {
             warning += ` Deleting this trainer will also delete all associated members and their workout sessions.`;
         } else if (objectType === 'Member') {

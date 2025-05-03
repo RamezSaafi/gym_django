@@ -34,6 +34,20 @@ class TrainerListView(ListView):
     template_name = "tracker/trainer_list.html"
     context_object_name = "trainers"
 
+    def get_queryset(self):
+
+        queryset = super().get_queryset().order_by('name') 
+        specialty_filter = self.request.GET.get('specialty', None)
+        if specialty_filter and specialty_filter.strip():
+            queryset = queryset.filter(specialty__icontains=specialty_filter.strip())
+        return queryset
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['current_specialty_filter'] = self.request.GET.get('specialty', '')
+        return context
+
 
 class TrainerDetailView(DetailView):
     model = Trainer
@@ -98,6 +112,20 @@ class MemberListView(ListView):
     model = Member
     template_name = "tracker/member_list.html"
     context_object_name = "members"
+
+    def get_queryset(self):
+
+        queryset = super().get_queryset().order_by('name')
+        name_filter = self.request.GET.get('name', None)
+        if name_filter and name_filter.strip():
+            queryset = queryset.filter(name__icontains=name_filter.strip())
+        return queryset
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['current_name_filter'] = self.request.GET.get('name', '')
+        return context
 
 
 class MemberDetailView(DetailView):
@@ -178,6 +206,31 @@ class WorkoutSessionListView(ListView):
     model = WorkoutSession
     template_name = "tracker/workoutsession_list.html"
     context_object_name = "workout_sessions"
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date', '-id') 
+
+        workout_type_filter = self.request.GET.get('type', None)
+        date_filter = self.request.GET.get('date', None)
+
+        if workout_type_filter and workout_type_filter.strip(): 
+
+            queryset = queryset.filter(workout_type__icontains=workout_type_filter.strip())
+
+        if date_filter:
+            
+            try:
+                queryset = queryset.filter(date=date_filter)
+            except ValueError:
+               pass
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['current_type_filter'] = self.request.GET.get('type', '')
+        context['current_date_filter'] = self.request.GET.get('date', '')
+        return context
 
 
 class WorkoutSessionDetailView(DetailView):
